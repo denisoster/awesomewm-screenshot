@@ -27,7 +27,7 @@ Just put these line to the appropriate places in
 
 ```lua
 -- Load the widget.
-local screenshot = require("screenshot")
+local screenshot = require("awesomewm-screenshot.screenshot")
 
 -- Configure the hotkeys.
         awful.key({ }, "Print", scrot_full,
