@@ -31,7 +31,7 @@ local screenshot = require("awesomewm-screenshot.screenshot")
 	     
 
 -- Configure the hotkeys.
-        awful.key({ }, "Print", scrot_full,
+	awful.key({ }, "Print", scrot_full,
           {description = "Take a screenshot of entire screen", group = "screenshot"}),
         awful.key({ modkey, }, "Print", scrot_selection,
           {description = "Take a screenshot of selection", group = "screenshot"}),
@@ -39,6 +39,9 @@ local screenshot = require("awesomewm-screenshot.screenshot")
           {description = "Take a screenshot of focused window", group = "screenshot"}),
         awful.key({ "Ctrl" }, "Print", scrot_delay,
           {description = "Take a screenshot of delay", group = "screenshot"}),
+-- Add _d to the end for copy to clipboard only
+-- 	awful.key({ }, "Print", scrot_full_d,
+--        {description = "Take a screenshot of entire screen and copy to clipboard only", group = "screenshot"}),
 ```
 
 the default storage of the ~/Pictures/
