@@ -16,7 +16,7 @@ Get it
 
 ```sh
 cd $HOME/.config/awesome/
-git clone https://github.com/denisoster/awesomewm-screenshot.git
+git clone https://github.com/GourSE/awesomewm-screenshot.git
 ```
 
 Use it
