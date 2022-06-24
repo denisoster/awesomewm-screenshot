@@ -15,7 +15,7 @@ Get it
 ------
 
 ```sh
-cd $XDG_CONFIG_HOME/awesome/
+cd $HOME/.config/awesome/
 git clone https://github.com/denisoster/awesomewm-screenshot.git
 ```
 
@@ -23,11 +23,12 @@ Use it
 ------
 
 Just put these line to the appropriate places in
-*$XDG_CONFIG_HOME/awesome/rc.lua*.
+*$HOME/.config/awesome/rc.lua*.
 
 ```lua
 -- Load the widget.
-local screenshot = require("screenshot")
+local screenshot = require("awesomewm-screenshot.screenshot")
+	     
 
 -- Configure the hotkeys.
         awful.key({ }, "Print", scrot_full,
