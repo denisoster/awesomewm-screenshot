@@ -15,22 +15,23 @@ Get it
 ------
 
 ```sh
-cd $XDG_CONFIG_HOME/awesome/
-git clone https://github.com/denisoster/awesomewm-screenshot.git
+cd $HOME/.config/awesome/
+git clone https://github.com/GourSE/awesomewm-screenshot.git
 ```
 
 Use it
 ------
 
 Just put these line to the appropriate places in
-*$XDG_CONFIG_HOME/awesome/rc.lua*.
+*$HOME/.config/awesome/rc.lua*.
 
 ```lua
 -- Load the widget.
-local screenshot = require("screenshot")
+local screenshot = require("awesomewm-screenshot.screenshot")
+	     
 
 -- Configure the hotkeys.
-        awful.key({ }, "Print", scrot_full,
+	awful.key({ }, "Print", scrot_full,
           {description = "Take a screenshot of entire screen", group = "screenshot"}),
         awful.key({ modkey, }, "Print", scrot_selection,
           {description = "Take a screenshot of selection", group = "screenshot"}),
@@ -38,6 +39,9 @@ local screenshot = require("screenshot")
           {description = "Take a screenshot of focused window", group = "screenshot"}),
         awful.key({ "Ctrl" }, "Print", scrot_delay,
           {description = "Take a screenshot of delay", group = "screenshot"}),
+-- Add _d to the end for copy to clipboard only
+-- 	awful.key({ }, "Print", scrot_full_d,
+--        {description = "Take a screenshot of entire screen and copy to clipboard only", group = "screenshot"}),
 ```
 
 the default storage of the ~/Pictures/
