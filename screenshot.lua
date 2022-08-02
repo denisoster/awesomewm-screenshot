@@ -30,7 +30,7 @@ function scrot_delay()
 end
 
 function scrot(cmd , callback, args)
-    awful.util.spawn_with_shell(cmd)
+    awful.spawn("/bin/bash -c "..'"'..cmd..'"')
     callback(args)
 end
 function scrot_callback(text)
@@ -39,3 +39,4 @@ function scrot_callback(text)
         timeout = 0.5
     })
 end
+
