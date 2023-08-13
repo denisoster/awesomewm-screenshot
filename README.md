@@ -2,7 +2,7 @@ awesomewm-screenshot
 ====================
 
 A screenshot widget for Awesome WM.
-It's compatible with Awesome 4
+It's compatible with Awesome 4 (4.3)
 
 Requirements
 ------------
