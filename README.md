@@ -1,15 +1,14 @@
 awesomewm-screenshot
-=======
+====================
 
 A screenshot widget for Awesome WM.
-It's compatible with Awesome 4
+It's compatible with Awesome 4 (4.3)
 
 Requirements
 ------------
 
 * scrot
 * xclip
-
 
 Get it
 ------
@@ -40,9 +39,13 @@ local screenshot = require("screenshot")
           {description = "Take a screenshot of delay", group = "screenshot"}),
 ```
 
-the default storage of the ~/Pictures/
+the default storage of the ~/Pictures/Screenshots/
+
+## This Fork
+
+I added the async functionality in the spawn commands since the orginal way wasn't working for me.
 
 License
-------
+-------
 
 this software is distributed in MIT License
