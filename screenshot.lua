@@ -1,41 +1,92 @@
-local awful = require("awful")
-local naughty = require("naughty")
+local screenshot_dir = os.getenv("HOME") .. "/Pictures/Screenshots/"
 
-timers = { 5,10 }
-screenshot = os.getenv("HOME") .. "/Pictures/scrot/$(date +%F_%T).png"
+local thumbnail = {
+    popup = nil,
+    timer = nil,
+}
 
-function scrot_full()
-    scrot("scrot " .. screenshot .. " -e 'xclip -selection c -t image/png < $f', scrot_callback", scrot_callback, "Take a screenshot of entire screen")
-end
-
-function scrot_selection()
-    scrot("sleep 0.5 && scrot -s " .. screenshot .. " -e 'xclip -selection c -t image/png < $f'", scrot_callback, "Take a screenshot of selection")
-end
-
-function scrot_window()
-    scrot("scrot -u " .. screenshot .. " -e 'xclip -selection c -t image/png < $f'", scrot_callback, "Take a screenshot of focused window")    
-end
-
-function scrot_delay()
-    items={}
-    for key, value in ipairs(timers)  do
-        items[#items+1]={tostring(value) , "scrot -d ".. value.." " .. screenshot .. " -e 'xclip -selection c -t image/png < $f'","Take a screenshot of delay" }
+local function close_thumbnail()
+    if thumbnail.timer and thumbnail.timer.started then
+        thumbnail.timer:stop()
     end
-    awful.menu.new(
-    {
-        items = items
-    }
-    ):show({keygrabber= true})
-    scrot_callback()
+
+    if thumbnail.popup then
+        thumbnail.popup.visible = false
+    end
+
+    thumbnail.popup = nil
+    thumbnail.timer = nil
 end
 
-function scrot(cmd , callback, args)
-    awful.util.spawn_with_shell(cmd)
-    callback(args)
+local function show_thumbnail(image_path)
+    close_thumbnail()
+
+    local image_widget = wibox.widget {
+        image = image_path,
+        forced_height = 180,
+        forced_width = 320,
+        widget = wibox.widget.imagebox
+    }
+
+    image_widget:buttons(gears.table.join(
+            awful.button({}, 1, function()
+                if image_path then
+                    awful.spawn.with_shell("xdg-open '" .. image_path .. "'")
+                end
+                close_thumbnail()
+            end)
+    ))
+
+    thumbnail.popup = awful.popup {
+        widget = image_widget,
+        border_color = "#FFFFFF",
+        border_width = 2,
+        ontop = true,
+        visible = true,
+        placement = function(d)
+            awful.placement.bottom_right(d, {
+                margins = {
+                    bottom = 50,
+                    right = 50
+                }
+            })
+        end,
+        screen = awful.screen.focused()
+    }
+
+    thumbnail.timer = gears.timer {
+        timeout = 3,
+        autostart = true,
+        single_shot = true,
+        callback = close_thumbnail
+    }
+
 end
-function scrot_callback(text)
-    naughty.notify({
-        text = text,
-        timeout = 0.5
-    })
+
+local function take_full_screenshot()
+    local filename = screenshot_dir .. "screenshot_" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".png"
+
+    awful.spawn.easy_async("maim " .. filename, function()
+        awful.spawn.spawn("xclip -selection clipboard -t image/png -i " .. filename)
+        show_thumbnail(filename)
+    end)
+
+end
+
+local function take_area_screenshot()
+    local filename = screenshot_dir .. "area_" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".png"
+
+    awful.spawn.easy_async("maim -s " .. filename, function()
+        awful.spawn.spawn("xclip -selection clipboard -t image/png -i " .. filename)
+        show_thumbnail(filename)
+    end)
+end
+
+local function take_window_screenshot()
+    local filename = screenshot_dir .. "window_" .. os.date("%Y-%m-%d_%H-%M-%S") .. ".png"
+
+    awful.spawn.easy_async("maim -i $(xdotool getactivewindow) " .. filename, function()
+        awful.spawn.spawn("xclip -selection clipboard -t image/png -i " .. filename)
+        show_thumbnail(filename)
+    end)
 end
