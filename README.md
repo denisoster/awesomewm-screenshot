@@ -7,8 +7,9 @@ It's compatible with Awesome 4
 Requirements
 ------------
 
-* scrot
+* maim
 * xclip
+* xdotool
 
 
 Get it
@@ -30,17 +31,12 @@ Just put these line to the appropriate places in
 local screenshot = require("screenshot")
 
 -- Configure the hotkeys.
-        awful.key({ }, "Print", scrot_full,
-          {description = "Take a screenshot of entire screen", group = "screenshot"}),
-        awful.key({ modkey, }, "Print", scrot_selection,
-          {description = "Take a screenshot of selection", group = "screenshot"}),
-        awful.key({ "Shift" }, "Print", scrot_window,
-          {description = "Take a screenshot of focused window", group = "screenshot"}),
-        awful.key({ "Ctrl" }, "Print", scrot_delay,
-          {description = "Take a screenshot of delay", group = "screenshot"}),
-```
+        awful.key({}, "Print", take_full_screenshot, { description = "Скриншот экрана", group = "screenshot" }),
 
-the default storage of the ~/Pictures/
+        awful.key({ "Shift" }, "Print", take_area_screenshot, { description = "Скриншот области", group = "screenshot" }),
+
+        awful.key({ "Control" }, "Print", take_window_screenshot, { description = "Скриншот окна", group = "screenshot" }),
+```
 
 License
 ------
