@@ -10,6 +10,7 @@ Requirements
 * maim
 * xclip
 * xdotool
+* rubato
 
 
 Get it
@@ -31,11 +32,11 @@ Just put these line to the appropriate places in
 local screenshot = require("screenshot")
 
 -- Configure the hotkeys.
-        awful.key({}, "Print", take_full_screenshot, { description = "Скриншот экрана", group = "screenshot" }),
+awful.key({}, "Print", screenshot.take_full, { description = "Скриншот экрана", group = "screenshot" }),
 
-        awful.key({ "Shift" }, "Print", take_area_screenshot, { description = "Скриншот области", group = "screenshot" }),
+awful.key({ "Shift" }, "Print", screenshot.take_area, { description = "Скриншот области", group = "screenshot" }),
 
-        awful.key({ "Control" }, "Print", take_window_screenshot, { description = "Скриншот окна", group = "screenshot" }),
+awful.key({ "Control" }, "Print", screenshot.take_window, { description = "Скриншот окна", group = "screenshot" }),
 ```
 
 License
